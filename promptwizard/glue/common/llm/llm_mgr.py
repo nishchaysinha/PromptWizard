@@ -47,6 +47,34 @@ def call_api(messages):
     return prediction
 
 
+def call_gemini_api(messages):
+
+    from google import genai
+    from google.genai import types
+
+    client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+
+    system_prompt = None
+    user_parts = []
+    for msg in messages:
+        if msg["role"] == "system":
+            system_prompt = msg["content"]
+        elif msg["role"] == "user":
+            user_parts.append(msg["content"])
+
+    response = client.models.generate_content(
+        model=os.environ.get("GEMINI_MODEL_NAME", "gemini-2.5-flash"),
+        contents=user_parts,
+        config=types.GenerateContentConfig(
+            system_instruction=system_prompt,
+            temperature=0.0,
+        ),
+    )
+
+    prediction = response.text
+    return prediction
+
+
 class LLMMgr:
     @staticmethod
     def chat_completion(messages: Dict):
@@ -55,6 +83,9 @@ class LLMMgr:
             if(llm_handle == "AzureOpenAI"): 
                 # Code to for calling LLMs
                 return call_api(messages)
+            elif(llm_handle == "Gemini"):
+                # Code for calling Gemini models
+                return call_gemini_api(messages)
             elif(llm_handle == "LLamaAML"):
                 # Code to for calling SLMs
                 return 0

@@ -99,6 +99,13 @@ There are three main ways to use PromptWizard:
 
   AZURE_OPENAI_CHAT_DEPLOYMENT_NAME="XXXXX"
   # Create a deployment for the model and place the deployment name here. 
+
+  # For Google Gemini: set MODEL_TYPE to "Gemini" and fill the following
+  MODEL_TYPE="Gemini"
+  GEMINI_API_KEY="XXXXX"
+  # Replace with your Google Gemini API key
+  GEMINI_MODEL_NAME="gemini-2.5-flash"
+  # Replace with the Gemini model name (e.g., gemini-2.5-pro, gemini-2.5-flash)
   ```
 - Run the code
   - To run PromptWizard on your custom dataset please jump [here](#run-on-custom-dataset) 
@@ -109,7 +116,7 @@ There are three main ways to use PromptWizard:
 
 #### Running on GSM8k (AQUARAT/SVAMP)
 
-- Please note that this code requires access to LLMs via API calling for which we support AZURE endpoints or OPENAI keys
+- Please note that this code requires access to LLMs via API calling for which we support AZURE endpoints, OPENAI keys or Google Gemini API
 - Set the AZURE endpoint configurations in [.env](demos/gsm8k/.env)
 - Follow the steps in [demo.ipynb](demos/gsm8k/demo.ipynb) to download the data, run the prompt optimization and carry out inference.
 
